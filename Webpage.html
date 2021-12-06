@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>TAMU ECEN CAPSTON PROJECT MANAGER</title>
+  <meta charset="UTF-8">
+  <meta name="description"
+    content="This field contains information about your page. It is usually around two sentences long.">
+  <meta name="author" content="Eduardo Escamilla">
+
+  <link href="bootstrap.min.css" rel="stylesheet">
+  <style>
+    h2 {
+      color: maroon;
+      font-size: 27pt;
+      font-style: oblique 90deg;
+      text-align: center;
+
+    }
+
+    h1 {
+      color: rgb(0, 0, 0);
+      font-size: 24pt;
+      text-align: center;
+      margin: 0 auto;
+      top: 10%;
+    }
+
+    p {
+      font-family: "Sans-serif", Helvetica, sans-serif;
+      color: rgb(0, 0, 0);
+    }
+
+    .navbar-custom {
+      background-color: maroon;
+    }
+
+    .navbar-custom,
+    .navbar-custom {
+      color: rgb(255, 255, 255);
+      font-size: 25pt;
+      font-style: oblique 45deg;
+      text-align: center;
+      position: relative;
+      height: 100%;
+      width: auto;
+      top: 0%;
+      left: 0%;
+      margin: 0 auto;
+    }
+
+    .navbar-brand {
+      color: rgb(255, 255, 255);
+      font-size: 27pt;
+      font-style: oblique 45deg;
+      text-align: center;
+
+      top: 0;
+      margin: 0 auto;
+
+    }
+
+    .login-box h1 {
+      color: rgb(255, 255, 255);
+      margin: 10px;
+      text-align: center;
+      margin-bottom: 35px;
+      padding-top: 10px;
+    }
+
+    .login-box form input {
+      display: block;
+
+      width: 350px;
+      height: 50px;
+      margin-left: 600px;
+      margin-right: 41px;
+      margin-bottom: 10px;
+    }
+
+
+    #submit {
+      display: inline-block;
+      color: rgb(255, 255, 255);
+      background-color: maroon;
+      border: 2px solid transparent;
+      border-radius: 5em;
+      width: 7em;
+      height: 3em;
+      position: relative;
+      margin: 0 auto;
+      left: 135px;
+
+
+    }
+
+    #pwdreset {
+      display: block;
+      color: maroon;
+      text-decoration: none;
+      margin: 0 auto;
+      width: 150px;
+      text-align: center;
+    }
+
+
+
+
+    input[type=text],
+    input[type=password] {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      display: inline-block;
+      border: none;
+      background: #f1f1f1;
+    }
+
+    /* Add a background color when the inputs get focus */
+    input[type=text]:focus,
+    input[type=password]:focus {
+      background-color: #ddd;
+      outline: none;
+    }
+
+    /* Set a style for all buttons */
+    .login-box button {
+      display: inline-block;
+      color: rgb(0, 0, 0);
+      background-color: maroon;
+      border: 2px solid transparent;
+      border-radius: 12em;
+      width: 10em;
+      height: 3em;
+      position: relative;
+      margin: 0 auto;
+
+
+    }
+
+
+
+    /* Extra styles for the cancel button */
+
+    .label {
+      position: relative;
+    }
+
+    button:hover {
+      opacity: 1;
+    }
+
+    /* Extra styles for the cancel button */
+    .cancelbtn {
+      padding: 14px 20px;
+      background-color: #f44336;
+    }
+
+    /* Float cancel and signup buttons and add an equal width */
+    .cancelbtn,
+    .signupbtn {
+      float: left;
+      width: 50%;
+    }
+
+    /* Add padding to container elements */
+    .container {
+      padding: 16px;
+    }
+
+    /* The Modal (background) */
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: #474e5d;
+      padding-top: 50px;
+      color: black;
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto 15% auto;
+      /* 5% from the top, 15% from the bottom and centered */
+      border: 1px solid #888;
+      width: 80%;
+      /* Could be more or less, depending on screen size */
+    }
+
+    /* Style the horizontal ruler */
+    hr {
+      border: 1px solid #f1f1f1;
+      margin-bottom: 25px;
+    }
+
+    /* The Close Button (x) */
+    .close {
+      position: absolute;
+      right: 35px;
+      top: 15px;
+      font-size: 40px;
+      font-weight: bold;
+      color: #f1f1f1;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #f44336;
+      cursor: pointer;
+    }
+
+    /* Clear floats */
+    .clearfix::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    @media screen and (max-width: 300px) {
+
+      .cancelbtn,
+      .signupbtn {
+        width: 100%;
+      }
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <main>
+    <nav class="navbar navbar-custom" style="padding:0;margin:0;">
+      <h2 class="navbar-brand">TAMU ECEN CAPSTONE PROJECT MANAGER</h2>
+
+
+      <div class="container-fluid" style="position: static;">
+        <div class="p-5 mb-4 bg-light rounded-3">
+          <div class="container-fluid py-1">
+
+            <h1 class="display-5 fw-bold" style="text-align:center;">Howdy 403 Students</h1>
+            <p class="col-md-6 fs-2 offset-md auto" style="text-align:center; margin: 0 auto;">Welcome to Senior Design!
+              In order to be
+              assigned to your team, you must upload your resume in PDF form. Make sure to only submit one
+              resume with the max file size being 64MB. Make sure to include your GPA. Uploading your
+              resume will allow us to formulate teams based on your strengths. </p>
+            <div class="d-flex justify-content-center align-self-center" style="margin-top: 115px;">
+              <form action="submit.php" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+
+                <div class="formgroup container-fluid">
+                  <input type="file" name="pdfFile" accept=".pdf"
+                    style="font-family: Georgia, 'Times New Roman', Times, serif; color:black; margin-left: 15%;" />
+                  <input type="hidden" name="MAX_FILE_SIZE" value="67108864" />
+                  <!--64 MB's worth in bytes-->
+                </div>
+                <div class="formgroup container-fluid">
+                  <label for="submit"
+                    style="font-family: Georgia, 'Times New Roman', Times, serif; color:black; ">Submit To
+                    Database</label><br />
+                  <input type="submit" name="submit" />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="p-5 mb-4 bg-light rounded-3">
+
+          <div class="container-fluid py-1">
+            <h1 class="display-5 fw-bold" style="text-align:center">Howdy Professors</h1>
+            <p class="col-md-6 fs-2 offset-md auto" style="text-align:center; margin: 0 auto;">Welcome to the TAMU ECEN
+              Capstone Project
+              Manager. Please create an account with the access code given to you. If you already have an
+              account you may log in and start submitting projects with their qualifications</p>
+            <div class="login-box">
+
+              <h1>Login</h1>
+              <form class="login-form" action="login.php" method="post">
+                <input id="username" type="text" name="username" placeholder="Username" style="margin:0 auto;">
+                <input id="password" type="password" name="password" placeholder="Password" style="margin: 1% auto">
+
+
+                <input id="submit" type="submit" name="submit" value="Login" />
+              </form>
+              <button onclick="document.getElementById('id01').style.display='inline-block' "
+                style=" width: 7em; background-color:maroon; color:white; top: -100px; right:150px">Sign Up</button>
+              <div id="id01" class="modal">
+
+                <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                  title="Close Modal">&times;</span>
+                <form class="modal-content" action="send_info.php" method="post">
+                  <div class="container">
+                    <b>Sign Up</b>
+                    <p>Please fill in this form to create an account.</p>
+                    <hr>
+                    <label id="Name"><b>Name</b></label>
+                    <input type="text" placeholder="Enter Name" name="name" required>
+
+
+
+                    <label id="email"><b>Email</b></label>
+                    <input type="text" placeholder="Enter Email" name="email" required>
+
+                    <label id="Username"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="username" required>
+
+                    <label id="psw"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+
+                    <label id="psw-repeat"><b>Repeat Password</b></label>
+                    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+
+
+
+                    <p>By creating an account you agree to our <a href="#" style="color:rgb(255, 255, 255)">Terms &
+                        Privacy</a>.</p>
+
+                    <div class="clearfix">
+                      <button style="color: white;" onclick="document.getElementById('id01').style.display='none'"
+                        class="cancelbtn">Cancel</button>
+                      <button class="signupbtn" name="save_data" style="color: white;">Sign Up</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+
+
+
+              <script>
+                // Get the modal
+                var modal = document.getElementById('id01');
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                  if (event.target == modal) {
+                    modal.style.display = "none";
+                  }
+                }
+              </script>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </main>
+
+
+
+
+</body>
+
+
+</html>

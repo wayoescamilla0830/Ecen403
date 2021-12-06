@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>TAMU ECEN CAPSTON PROJECT MANAGER</title>
+	<meta charset="UTF-8">
+
+
+	<link href="bootstrap.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	<script>
+
+
+		var Select2MultiCheckBoxObj1 = [];
+		var id1_selectElement = 'id1_selectElement';
+		var SstaticWordInID1 = 'state_';
+
+		function AddItemInSelect2MultiCheckBoxObj1(id, IsChecked) {
+			if (Select2MultiCheckBoxObj1.length > 0) {
+				let index = Select2MultiCheckBoxObj1.findIndex(x => x.id == id);
+				if (index > -1) {
+					Select2MultiCheckBoxObj1[index]["IsChecked"] = IsChecked;
+				}
+				else {
+					Select2MultiCheckBoxObj1.push({ "id": id, "IsChecked": IsChecked });
+				}
+			}
+			else {
+				Select2MultiCheckBoxObj1.push({ "id": id, "IsChecked": IsChecked });
+			}
+		}
+
+		function IsCheckedAllOption1(trueOrFalse) {
+			$.map($('#' + id1_selectElement + ' option'), function (option) {
+				AddItemInSelect2MultiCheckBoxObj1(option.value, trueOrFalse);
+			});
+			$('#' + id1_selectElement + " > option").not(':first').prop("selected", trueOrFalse); //This will select all options and adds in Select2
+			$("#" + id1_selectElement).trigger("change");//This will effect the changes
+			$(".select2-results__option").not(':first').attr("aria-selected", trueOrFalse); //This will make grey color of selected options
+
+			$("input[id^='" + SstaticWordInID1 + "']").prop("checked", trueOrFalse);
+		}
+
+		$(document).ready(function () {
+			//Begin - Select 2 Multi-Select Code
+			$.map($('#' + id1_selectElement + ' option'), function (option) {
+				AddItemInSelect2MultiCheckBoxObj1(option.value, false);
+			});
+
+			function formatResult(state) {
+				if (Select2MultiCheckBoxObj1.length > 0) {
+					var stateId = SstaticWordInID1 + state.id;
+					let index = Select2MultiCheckBoxObj1.findIndex(x => x.id == state.id);
+					if (index > -1) {
+						var checkbox = $('<div class="checkbox"><input class="select1Checkbox" id="' + stateId + '" type="checkbox" ' + (Select2MultiCheckBoxObj1[index]["IsChecked"] ? 'checked' : '') +
+							'><label for="checkbox' + stateId + '">' + state.text + '</label></div>', { id: stateId });
+						return checkbox;
+					}
+				}
+			}
+
+			let optionSelect1 = {
+				templateResult: formatResult,
+				closeOnSelect: false,
+				width: '100%'
+			};
+
+			let $select1 = $("#" + id1_selectElement).select2(optionSelect1);
+
+			//var scrollTop;
+			//$select2.on("select2:selecting", function (event) {
+			//    var $pr = $('#' + event.params.args.data._resultId).parent();
+			//    scrollTop = $pr.prop('scrollTop');
+			//    let xxxx = 2;
+			//});
+
+			$select1.on("select2:select", function (event) {
+				$("#" + SstaticWordInID1 + event.params.data.id).prop("checked", true);
+				AddItemInSelect2MultiCheckBoxObj1(event.params.data.id, true);
+				//If all options are slected then selectAll option would be also selected.
+				if (Select2MultiCheckBoxObj1.filter(x => x.IsChecked === false).length === 1) {
+					AddItemInSelect2MultiCheckBoxObj1(0, true);
+					$("#" + SstaticWordInID1 + "2").prop("checked", true);
+				}
+			});
+
+			$select1.on("select2:unselect", function (event) {
+				$("#" + SstaticWordInID1 + "2").prop("checked", false);
+				AddItemInSelect2MultiCheckBoxObj1(0, false);
+				$("#" + SstaticWordInID1 + event.params.data.id).prop("checked", false);
+				AddItemInSelect2MultiCheckBoxObj1(event.params.data.id, false);
+			});
+
+			$(document).on("click", "#" + SstaticWordInID1 + "2", function () {
+				//var b = !($("#state_SelectAll").is(':checked'));
+				var b = $("#" + SstaticWordInID1 + "2").is(':checked');
+
+				IsCheckedAllOption1(b);
+				//state_CheckAll = b;
+				//$(window).scroll();
+			});
+			$(document).on("click", ".select1Checkbox", function (event) {
+				let selector = "#" + this.id;
+				let isChecked = Select2MultiCheckBoxObj1[Select2MultiCheckBoxObj1.findIndex(x => x.id == this.id.replaceAll(SstaticWordInID1, ''))]['IsChecked'];
+				$(selector).prop("checked", isChecked);
+			});
+
+		});
+
+		var Select2MultiCheckBoxObj2 = [];
+		var id2_selectElement = 'id2_SelectElement';
+		var staticWordInID2 = 'state_';
+
+		function AddItemInSelect2MultiCheckBoxObj2(id, IsChecked) {
+			if (Select2MultiCheckBoxObj2.length > 0) {
+				let index = Select2MultiCheckBoxObj2.findIndex(x => x.id == id);
+				if (index > -1) {
+					Select2MultiCheckBoxObj2[index]["IsChecked"] = IsChecked;
+				}
+				else {
+					Select2MultiCheckBoxObj2.push({ "id": id, "IsChecked": IsChecked });
+				}
+			}
+			else {
+				Select2MultiCheckBoxObj2.push({ "id": id, "IsChecked": IsChecked });
+			}
+		}
+
+		function IsCheckedAllOption(trueOrFalse) {
+			$.map($('#' + id2_selectElement + ' option'), function (option) {
+				AddItemInSelect2MultiCheckBoxObj2(option.value, trueOrFalse);
+			});
+			$('#' + id2_selectElement + " > option").not(':first').prop("selected", trueOrFalse); //This will select all options and adds in Select2
+			$("#" + id2_selectElement).trigger("change");//This will effect the changes
+			$(".select2-results__option").not(':first').attr("aria-selected", trueOrFalse); //This will make grey color of selected options
+
+			$("input[id^='" + staticWordInID2 + "']").prop("checked", trueOrFalse);
+		}
+
+		$(document).ready(function () {
+			//Begin - Select 2 Multi-Select Code
+			$.map($('#' + id2_selectElement + ' option'), function (option) {
+				AddItemInSelect2MultiCheckBoxObj2(option.value, false);
+			});
+
+			function formatResult(state) {
+				if (Select2MultiCheckBoxObj2.length > 0) {
+					var stateId = staticWordInID2 + state.id;
+					let index = Select2MultiCheckBoxObj2.findIndex(x => x.id == state.id);
+					if (index > -1) {
+						var checkbox = $('<div class="checkbox"><input class="select2Checkbox" id="' + stateId + '" type="checkbox" ' + (Select2MultiCheckBoxObj2[index]["IsChecked"] ? 'checked' : '') +
+							'><label for="checkbox' + stateId + '">' + state.text + '</label></div>', { id: stateId });
+						return checkbox;
+					}
+				}
+			}
+
+			let optionSelect2 = {
+				templateResult: formatResult,
+				closeOnSelect: false,
+				width: '100%'
+			};
+
+			let $select2 = $("#" + id2_selectElement).select2(optionSelect2);
+
+			//var scrollTop;
+			//$select2.on("select2:selecting", function (event) {
+			//    var $pr = $('#' + event.params.args.data._resultId).parent();
+			//    scrollTop = $pr.prop('scrollTop');
+			//    let xxxx = 2;
+			//});
+
+			$select2.on("select2:select", function (event) {
+				$("#" + staticWordInID2 + event.params.data.id).prop("checked", true);
+				AddItemInSelect2MultiCheckBoxObj2(event.params.data.id, true);
+				//If all options are slected then selectAll option would be also selected.
+				if (Select2MultiCheckBoxObj2.filter(x => x.IsChecked === false).length === 1) {
+					AddItemInSelect2MultiCheckBoxObj2(0, true);
+					$("#" + staticWordInID2 + "1").prop("checked", true);
+				}
+			});
+
+			$select2.on("select2:unselect", function (event) {
+				$("#" + staticWordInID2 + "1").prop("checked", false);
+				AddItemInSelect2MultiCheckBoxObj2(0, false);
+				$("#" + staticWordInID2 + event.params.data.id).prop("checked", false);
+				AddItemInSelect2MultiCheckBoxObj2(event.params.data.id, false);
+			});
+
+			$(document).on("click", "#" + staticWordInID2 + "1", function () {
+				//var b = !($("#state_SelectAll").is(':checked'));
+				var b = $("#" + staticWordInID2 + "1").is(':checked');
+
+				IsCheckedAllOption(b);
+				//state_CheckAll = b;
+				//$(window).scroll();
+			});
+			$(document).on("click", ".select2Checkbox", function (event) {
+				let selector = "#" + this.id;
+				let isChecked = Select2MultiCheckBoxObj2[Select2MultiCheckBoxObj2.findIndex(x => x.id == this.id.replaceAll(staticWordInID2, ''))]['IsChecked'];
+				$(selector).prop("checked", isChecked);
+			});
+
+		});
+
+		var Select2MultiCheckBoxObj = [];
+		var id_selectElement = 'id_SelectElement';
+		var staticWordInID = 'state_';
+
+		function AddItemInSelect2MultiCheckBoxObj(id, IsChecked) {
+			if (Select2MultiCheckBoxObj.length > 0) {
+				let index = Select2MultiCheckBoxObj.findIndex(x => x.id == id);
+				if (index > -1) {
+					Select2MultiCheckBoxObj[index]["IsChecked"] = IsChecked;
+				}
+				else {
+					Select2MultiCheckBoxObj.push({ "id": id, "IsChecked": IsChecked });
+				}
+			}
+			else {
+				Select2MultiCheckBoxObj.push({ "id": id, "IsChecked": IsChecked });
+			}
+		}
+
+		function IsCheckedAllOption3(trueOrFalse) {
+			$.map($('#' + id_selectElement + ' option'), function (option) {
+				AddItemInSelect2MultiCheckBoxObj(option.value, trueOrFalse);
+			});
+			$('#' + id_selectElement + " > option").not(':first').prop("selected", trueOrFalse); //This will select all options and adds in Select2
+			$("#" + id_selectElement).trigger("change");//This will effect the changes
+			$(".select2-results__option").not(':first').attr("aria-selected", trueOrFalse); //This will make grey color of selected options
+
+			$("input[id^='" + staticWordInID + "']").prop("checked", trueOrFalse);
+		}
+
+		$(document).ready(function () {
+			//Begin - Select 2 Multi-Select Code
+			$.map($('#' + id_selectElement + ' option'), function (option) {
+				AddItemInSelect2MultiCheckBoxObj(option.value, false);
+			});
+
+			function formatResult(state) {
+				if (Select2MultiCheckBoxObj.length > 0) {
+					var stateId = staticWordInID + state.id;
+					let index = Select2MultiCheckBoxObj.findIndex(x => x.id == state.id);
+					if (index > -1) {
+						var checkbox = $('<div class="checkbox"><input class="select3Checkbox" id="' + stateId + '" type="checkbox" ' + (Select2MultiCheckBoxObj[index]["IsChecked"] ? 'checked' : '') +
+							'><label for="checkbox' + stateId + '">' + state.text + '</label></div>', { id: stateId });
+						return checkbox;
+					}
+				}
+			}
+
+			let optionSelect3 = {
+				templateResult: formatResult,
+				closeOnSelect: false,
+				width: '100%'
+			};
+
+			let $select3 = $("#" + id_selectElement).select2(optionSelect3);
+
+			//var scrollTop;
+			//$select2.on("select2:selecting", function (event) {
+			//    var $pr = $('#' + event.params.args.data._resultId).parent();
+			//    scrollTop = $pr.prop('scrollTop');
+			//    let xxxx = 2;
+			//});
+
+			$select3.on("select2:select", function (event) {
+				$("#" + staticWordInID + event.params.data.id).prop("checked", true);
+				AddItemInSelect2MultiCheckBoxObj(event.params.data.id, true);
+				//If all options are slected then selectAll option would be also selected.
+				if (Select2MultiCheckBoxObj.filter(x => x.IsChecked === false).length === 1) {
+					AddItemInSelect2MultiCheckBoxObj(0, true);
+					$("#" + staticWordInID + "3").prop("checked", true);
+				}
+			});
+
+			$select3.on("select2:unselect", function (event) {
+				$("#" + staticWordInID + "3").prop("checked", false);
+				AddItemInSelect2MultiCheckBoxObj(0, false);
+				$("#" + staticWordInID + event.params.data.id).prop("checked", false);
+				AddItemInSelect2MultiCheckBoxObj(event.params.data.id, false);
+			});
+
+			$(document).on("click", "#" + staticWordInID + "3", function () {
+				//var b = !($("#state_SelectAll").is(':checked'));
+				var b3 = $("#" + staticWordInID + "3").is(':checked');
+
+				IsCheckedAllOption3(b3);
+				//state_CheckAll = b;
+				//$(window).scroll();
+			});
+			$(document).on("click", ".select3Checkbox", function (event) {
+				let selector = "#" + this.id;
+				let isChecked = Select2MultiCheckBoxObj[Select2MultiCheckBoxObj.findIndex(x => x.id == this.id.replaceAll(staticWordInID, ''))]['IsChecked'];
+				$(selector).prop("checked", isChecked);
+			});
+
+		});
+
+
+
+
+
+
+
+		var Select2MultiCheckBoxObj4 = [];
+		var id4_selectElement = 'id4_SelectElement';
+		var staticWordInID4 = 'state_';
+
+		function AddItemInSelect2MultiCheckBoxObj4(id, IsChecked) {
+			if (Select2MultiCheckBoxObj4.length > 0) {
+				let index = Select2MultiCheckBoxObj4.findIndex(x => x.id == id);
+				if (index > -1) {
+					Select2MultiCheckBoxObj4[index]["IsChecked"] = IsChecked;
+				}
+				else {
+					Select2MultiCheckBoxObj4.push({ "id": id, "IsChecked": IsChecked });
+				}
+			}
+			else {
+				Select2MultiCheckBoxObj4.push({ "id": id, "IsChecked": IsChecked });
+			}
+		}
+
+		function IsCheckedAllOption4(trueOrFalse) {
+			$.map($('#' + id4_selectElement + ' option'), function (option) {
+				AddItemInSelect2MultiCheckBoxObj4(option.value, trueOrFalse);
+			});
+			$('#' + id4_selectElement + " > option").not(':first').prop("selected", trueOrFalse); //This will select all options and adds in Select2
+			$("#" + id4_selectElement).trigger("change");//This will effect the changes
+			$(".select2-results__option").not(':first').attr("aria-selected", trueOrFalse); //This will make grey color of selected options
+
+			$("input[id^='" + staticWordInID4 + "']").prop("checked", trueOrFalse);
+		}
+
+		$(document).ready(function () {
+			//Begin - Select 2 Multi-Select Code
+
+			$.map($('#' + id4_selectElement + ' option'), function (option) {
+				AddItemInSelect2MultiCheckBoxObj4(option.value, false);
+
+			});
+
+			function formatResult(state) {
+				if (Select2MultiCheckBoxObj4.length > 0) {
+					var stateId = staticWordInID4 + state.id;
+					let index = Select2MultiCheckBoxObj4.findIndex(x => x.id == state.id);
+					if (index > -1) {
+						var checkbox = $('<div class="checkbox"><input class="select4Checkbox" id="' + stateId + '" type="checkbox" ' + (Select2MultiCheckBoxObj4[index]["IsChecked"] ? 'checked' : '') +
+							'><label for="checkbox' + stateId + '">' + state.text + '</label></div>', { id: stateId });
+						return checkbox;
+					}
+				}
+			}
+
+			let optionSelect4 = {
+
+				templateResult: formatResult,
+				closeOnSelect: false,
+
+				width: '100%',
+
+
+
+			};
+
+			let $select4 = $("#" + id4_selectElement).select2(optionSelect4);
+
+			//var scrollTop;
+			//$select2.on("select2:selecting", function (event) {
+			//    var $pr = $('#' + event.params.args.data._resultId).parent();
+			//    scrollTop = $pr.prop('scrollTop');
+			//    let xxxx = 2;
+			//});
+
+			$select4.on("select2:select", function (event) {
+				$("#" + staticWordInID4 + event.params.data.id).prop("checked", true);
+				AddItemInSelect2MultiCheckBoxObj4(event.params.data.id, true);
+				//If all options are slected then selectAll option would be also selected.
+				if (Select2MultiCheckBoxObj4.filter(x => x.IsChecked === false).length === 1) {
+					AddItemInSelect2MultiCheckBoxObj4(0, true);
+					$("#" + staticWordInID4 + "4").prop("checked", true);
+				}
+
+			});
+
+			$select4.on("select2:unselect", function (event) {
+				$("#" + staticWordInID4 + "4").prop("checked", false);
+				AddItemInSelect2MultiCheckBoxObj4(0, false);
+				$("#" + staticWordInID4 + event.params.data.id).prop("checked", false);
+				AddItemInSelect2MultiCheckBoxObj4(event.params.data.id, false);
+			});
+
+			$(document).on("click", "#" + staticWordInID4 + "4", function () {
+				//var b = !($("#state_SelectAll").is(':checked'));
+				var b4 = $("#" + staticWordInID4 + "4").is(':checked');
+
+				IsCheckedAllOption4(b4);
+				//state_CheckAll = b;
+				// $(window).scroll();
+			});
+			$(document).on("click", ".select4Checkbox", function (event) {
+				let selector = "#" + this.id;
+				let isChecked = Select2MultiCheckBoxObj4[Select2MultiCheckBoxObj4.findIndex(x => x.id == this.id.replaceAll(staticWordInID4, ''))]['IsChecked'];
+				$(selector).prop("checked", isChecked);
+
+
+			});
+
+		});
+
+
+
+
+	</script>
+
+
+	<style>
+		h2 {
+			color: maroon;
+			font-size: 27pt;
+			font-style: oblique 90deg;
+			text-align: center;
+
+		}
+
+		h1 {
+			color: rgb(0, 0, 0);
+			font-size: 24pt;
+			text-align: center;
+			margin: 0 auto;
+			top: 10%;
+		}
+
+		p {
+			font-family: "Sans-serif", Helvetica, sans-serif;
+			color: rgb(0, 0, 0);
+		}
+
+		.navbar-custom {
+			background-color: maroon;
+		}
+
+		.navbar-custom,
+		.navbar-custom {
+			color: rgb(255, 255, 255);
+			font-size: 25pt;
+			font-style: oblique 45deg;
+			text-align: center;
+			position: relative;
+			height: 100%;
+			width: auto;
+			top: 0%;
+			left: 0%;
+			margin: 0 auto;
+		}
+
+		.navbar-brand {
+			color: rgb(255, 255, 255);
+			font-size: 27pt;
+			font-style: oblique 45deg;
+			text-align: center;
+
+			top: 0;
+			margin: 0 auto;
+
+		}
+
+		.login-box h1 {
+			color: rgb(255, 255, 255);
+			margin: 10px;
+			text-align: center;
+			margin-bottom: 35px;
+			padding-top: 10px;
+		}
+
+		.login-box form input {
+			display: block;
+
+			width: 350px;
+			height: 50px;
+			margin-left: 600px;
+			margin-right: 41px;
+			margin-bottom: 10px;
+		}
+
+
+		#submit {
+			display: inline-block;
+			color: rgb(255, 255, 255);
+			background-color: maroon;
+			border: 2px solid transparent;
+			border-radius: 5em;
+			width: 7em;
+			height: 3em;
+			position: relative;
+			margin: 0 auto;
+			left: 135px;
+
+
+		}
+
+		#pwdreset {
+			display: block;
+			color: maroon;
+			text-decoration: none;
+			margin: 0 auto;
+			width: 150px;
+			text-align: center;
+		}
+
+
+
+
+		input[type=text],
+		input[type=password] {
+			width: 100%;
+			padding: 15px;
+			margin: 5px 0 22px 0;
+			display: inline-block;
+			border: none;
+			background: #f1f1f1;
+		}
+
+		/* Add a background color when the inputs get focus */
+		input[type=text]:focus,
+		input[type=password]:focus {
+			background-color: #ddd;
+			outline: none;
+		}
+
+		/* Set a style for all buttons */
+		.login-box button {
+			display: inline-block;
+			color: rgb(0, 0, 0);
+			background-color: maroon;
+			border: 2px solid transparent;
+			border-radius: 12em;
+			width: 10em;
+			height: 3em;
+			position: relative;
+			margin: 0 auto;
+
+
+		}
+
+
+
+		/* Extra styles for the cancel button */
+
+		.label {
+			position: relative;
+		}
+
+		button:hover {
+			opacity: 1;
+		}
+
+		/* Extra styles for the cancel button */
+		.cancelbtn {
+			padding: 14px 20px;
+			background-color: #f44336;
+		}
+
+		/* Float cancel and signup buttons and add an equal width */
+		.cancelbtn,
+		.signupbtn {
+			float: left;
+			width: 50%;
+		}
+
+		/* Add padding to container elements */
+		.container {
+			padding: 16px;
+		}
+
+		/* The Modal (background) */
+		.modal {
+			display: none;
+			/* Hidden by default */
+			position: fixed;
+			/* Stay in place */
+			z-index: 1;
+			/* Sit on top */
+			left: 0;
+			top: 0;
+			width: 100%;
+			/* Full width */
+			height: 100%;
+			/* Full height */
+			overflow: auto;
+			/* Enable scroll if needed */
+			background-color: #474e5d;
+			padding-top: 50px;
+			color: black;
+		}
+
+		/* Modal Content/Box */
+		.modal-content {
+			background-color: #fefefe;
+			margin: 5% auto 15% auto;
+			/* 5% from the top, 15% from the bottom and centered */
+			border: 1px solid #888;
+			width: 80%;
+			/* Could be more or less, depending on screen size */
+		}
+
+		/* Style the horizontal ruler */
+		hr {
+			border: 1px solid #f1f1f1;
+			margin-bottom: 25px;
+		}
+
+		/* The Close Button (x) */
+		.close {
+			position: absolute;
+			right: 35px;
+			top: 15px;
+			font-size: 40px;
+			font-weight: bold;
+			color: #f1f1f1;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: #f44336;
+			cursor: pointer;
+		}
+
+		/* Clear floats */
+		.clearfix::after {
+			content: "";
+			clear: both;
+			display: table;
+		}
+
+		@media screen and (max-width: 300px) {
+
+			.cancelbtn,
+			.signupbtn {
+				width: 100%;
+			}
+		}
+
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+	</style>
+
+
+
+
+</head>
+
+<body>
+	<main>
+		<nav class="navbar navbar-custom" aria-label="First navbar example">
+
+			<h2 class="navbar-brand">TAMU ECEN CAPSTONE PROJECT MANAGER</h2>
+
+
+			<div class="container-fluid">
+				<div class="p-5 mb-4 bg-light rounded-3">
+					<div class="container-fluid py-1">
+
+						<h1 class="display-5 fw-bold" style="text-align:center;">Project Submission Form</h1>
+						<form action="send_proj.php" method="post" style="color: black;">
+							<h1 class="display-7 fw-bold" style="text-align:center;">Project Name</h1>
+							<input type="text" name="Proj_Name" placeholder="Project Name" maxlength="25" size="25"><br>
+
+							<h1 class="display-7 fw-bold" style="text-align:center;">Professor's Name</h1>
+							<input type="text" name="Professor_Name" placeholder="Professor Name" maxlength="25" size="25"><br>
+
+							<p class="col-md-6 fs-2" style="text-align:center; margin: 0 auto;">Please provide a brief
+								description of the project and the skills needed for each position down below. </p>
+
+
+							Project Description:
+							<br>
+							<textarea rows="3" cols="60" name="project_description" style="margin-bottom: 2.5%;">
+                                 Enter Description here...
+                             </textarea><br>
+
+							<h1 class="display-5 fw-bold"
+								style="text-align: left; color: rgb(0, 0, 0); margin-bottom: 2.5%;"> Position 1
+							</h1>
+
+
+							<input type="text" name="role_name1" placeholder="Role name" maxlength="50" size="50"><br>
+
+							<div class="col-sm-15" style="margin-top: 2%;">
+								<select id="id1_selectElement" multiple>
+									<option value="2" disabled>Select All</option>
+									<option value="11">Php</option>
+									<option value="22">C++</option>
+									<option value="33">SQL</option>
+									<option value="44">Jquery</option>
+									<option value="55">HTML</option>
+									<option value="66">Javascript</option>
+									<option value="77">Power Systems</option>
+									<option value="88">Power Electronics</option>
+									<option value="99">Machine Learning</option>
+									<option value="10">Artificial Intelligence</option>
+									<option value="12">Power Supply</option>
+									<option value="13">Motor Control</option>
+									<option value="14">Imaging</option>
+									<option value="15">Digital Signal Processing</option>
+									<option value="16">PCB Design</option>
+									<option value="17">Wireless Networking</option>
+
+								</select> <br>
+								<h1 class="display-5 fw-bold"
+									style="text-align: left; color: rgb(0, 0, 0); margin-bottom: 2.5%;"> Position 2
+								</h1>
+
+
+								<input type="text" name="role_name2" placeholder="Role name" maxlength="50"
+									size="50"><br>
+
+								<select id="id2_SelectElement" multiple>
+									<option value="1" disabled>Select All</option>
+									<option value="11">Php</option>
+									<option value="22">C++</option>
+									<option value="33">SQL</option>
+									<option value="44">Jquery</option>
+									<option value="55">HTML</option>
+									<option value="66">Javascript</option>
+									<option value="77">Power Systems</option>
+									<option value="88">Power Electronics</option>
+									<option value="99">Machine Learning</option>
+									<option value="10">Artificial Intelligence</option>
+									<option value="12">Power Supply</option>
+									<option value="13">Motor Control</option>
+									<option value="14">Imaging</option>
+									<option value="15">Digital Signal Processing</option>
+									<option value="16">PCB Design</option>
+									<option value="17">Wireless Networking</option>
+
+								</select><br>
+								<h1 class="display-5 fw-bold"
+									style="text-align: left; color: rgb(0, 0, 0); margin-bottom: 2.5%;"> Position 3
+								</h1>
+
+
+								<input type="text" name="role_name3" placeholder="Role name" maxlength="50"
+									size="50"><br>
+
+								<select id="id_SelectElement" multiple>
+									<option value="3" disabled>Select All</option>
+									<option value="11">Php</option>
+									<option value="22">C++</option>
+									<option value="33">SQL</option>
+									<option value="44">Jquery</option>
+									<option value="55">HTML</option>
+									<option value="66">Javascript</option>
+									<option value="77">Power Systems</option>
+									<option value="88">Power Electronics</option>
+									<option value="99">Machine Learning</option>
+									<option value="10">Artificial Intelligence</option>
+									<option value="12">Power Supply</option>
+									<option value="13">Motor Control</option>
+									<option value="14">Imaging</option>
+									<option value="15">Digital Signal Processing</option>
+									<option value="16">PCB Design</option>
+									<option value="17">Wireless Networking</option>
+
+								</select><br>
+
+								<h1 class="display-5 fw-bold"
+									style="text-align: left; color: rgb(0, 0, 0); margin-bottom: 2.5%;"> Position 4
+								</h1>
+
+
+								<input type="text" name="role_name4" placeholder="Role name" maxlength="50"
+									size="50"><br>
+
+								<select id="id4_SelectElement" style="height:fit-content" multiple>
+
+									<option value="4" disabled>Select All</option>
+									<option value="11">Php</option>
+									<option value="22">C++</option>
+									<option value="33">SQL</option>
+									<option value="44">Jquery</option>
+									<option value="55">HTML</option>
+									<option value="66">Javascript</option>
+									<option value="77">Power Systems</option>
+									<option value="88">Power Electronics</option>
+									<option value="99">Machine Learning</option>
+									<option value="10">Artificial Intelligence</option>
+									<option value="12">Power Supply</option>
+									<option value="13">Motor Control</option>
+									<option value="14">Imaging</option>
+									<option value="15">Digital Signal Processing</option>
+									<option value="16">PCB Design</option>
+									<option value="17">Wireless Networking</option>
+
+								</select>
+
+								<div class="form-group">
+									<button type="submit" name="save_proj" class="btn btn-primary">Save Project</button>
+
+								</div>
+							</div>
+
+
+						</form>
+						<div class="form-group">
+							<form action="log_out.php" method="POST" style="color: black;">
+								<button type="submit" name="log_out" class="btn btn-primary">Log Out</button>
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+		</nav>
+
+	</main>
+
+
+</body>
+
+</html>
